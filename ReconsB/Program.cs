@@ -15,9 +15,8 @@ builder.Services.AddSwaggerGen();
 
 // Add DbContext with SQLite
 builder.Services.AddDbContext<AddDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"))
+   options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
-
 // Configure JwtConfig from appsettings.json
 builder.Services.Configure<JwtConfig>(builder.Configuration.GetSection("JwtConfig"));
 

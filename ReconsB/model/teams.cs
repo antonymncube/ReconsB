@@ -1,4 +1,4 @@
-﻿namespace ReconsB.Models
+﻿namespace ReconsB.Model
 {
     public class Team
     {
