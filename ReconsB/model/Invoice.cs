@@ -1,15 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ReconsB.model;
+ 
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ReconsB.model
+namespace ReconsB.Model
 {
     public class Invoice
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] // Auto-increment
         public int InvoiceId { get; set; }
-
-        public string FileName { get; set; }
-
-        public string Type { get; set; }
+ 
 
         public string FromCompany { get; set; }
 
@@ -19,16 +20,19 @@ namespace ReconsB.model
 
         public string Reference { get; set; }
 
-
+        [Required]
+        [StringLength(50)]
         public string InvoiceNumber { get; set; }
 
+        [Required]
+        [StringLength(50)]
         public string PONumber { get; set; }
 
         public string CustomerNumber { get; set; }
 
         public string PaymentTerms { get; set; }
 
-        public decimal? InvoiceAmount { get; set; }
+        public decimal InvoiceAmount { get; set; }
 
         public string Currency { get; set; }
 
@@ -40,13 +44,29 @@ namespace ReconsB.model
 
         public string SecurityChecks { get; set; }
 
-        public int? ContactId { get; set; }
+      
+        [ForeignKey("PurchaseOrder")]
+        public int? PurchaseOrderId { get; set; } 
 
-        public string ErpSupplierName { get; set; }
+        public virtual PurchaseOrder PurchaseOrder { get; set; } 
 
-        public string FileType { get; set; }
+       
+        [ForeignKey("Contact")]
+        public int? ContactId { get; set; }  
 
-        public byte[] FileData { get; set; }
+        public virtual Contact Contact { get; set; }  
 
+       
+        [ForeignKey("File")]
+        public int FileId { get; set; }
+
+        [NotMapped]
+        public List<PurchaseOrderItem> Items { get; set; }
+        public virtual Filee File { get; set; }
+
+        public Invoice()
+        {
+            Items = new List<PurchaseOrderItem>();  
+        }
     }
 }
